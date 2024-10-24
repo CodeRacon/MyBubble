@@ -98,7 +98,7 @@
   .close-add-channel:hover {
     cursor: pointer;
     background-image: url("../../../../assets/icons/chat/general/close-hover.svg");
-    background-color: #eceefe;
+    background-color: $background;
   }
 
   input {
@@ -107,7 +107,7 @@
     height: 3.75rem;
     padding: 1.125rem 1.25rem 1.125rem 1.25rem;
     border-radius: 2.5rem;
-    border: 0.0625rem solid #adb0d9;
+    border: 0.0625rem solid #a8bebc;
 
     &:focus-within {
       box-shadow: $profile-box-shadow;
@@ -115,7 +115,7 @@
   }
 
   input:hover {
-    border-color: #535af1;
+    border-color: $accent;
     cursor: pointer;
   }
 
@@ -129,7 +129,7 @@
 .duplicate-channel-error-msg {
   width: 100%;
   margin-top: -1rem;
-  color: #f00;
+  color: $error;
   font-size: 0.875rem;
   text-align: start;
   opacity: 1;
@@ -139,7 +139,7 @@
 .hide-duplicate-channel-error-msg {
   width: 100%;
   margin-top: -1rem;
-  color: #f00;
+  color: $error;
   font-size: 0.875rem;
   text-align: start;
   opacity: 0;
@@ -201,7 +201,7 @@
     height: 3.75rem;
     padding: 1.125rem 1.25rem 1.125rem 1.25rem;
     border-radius: 2.5rem;
-    border: 0.0625rem solid #adb0d9;
+    border: 0.0625rem solid #a8bebc;
   }
 }
 
@@ -295,5 +295,5 @@
 }
 
 .addUserSearchbar:hover {
-  border-color: #535af1;
+  border-color: $accent;
 }

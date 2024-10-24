@@ -14,7 +14,7 @@
 .member-list-header {
   @include flex(space-between, center);
   width: 100%;
-  padding: 2.5rem 2.5rem 0 2.5rem;
+  padding: 1.25rem 2.5rem 0 2.5rem;
 
   h4 {
     margin: 0;
@@ -39,73 +39,73 @@
 }
 
 .member-list {
-  gap: 0.9375rem;
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 0.75rem;
   width: 100%;
   height: 100%;
   padding: 1rem 2.5rem;
   overflow-y: auto;
 
-  .current-user {
-    user-select: none;
+  // .current-user {
+  //   user-select: none;
+
+  //   &:hover {
+  //     cursor: default !important;
+  //   }
+  // }
+
+  .member,
+  .add-member-btn {
+    @include flex(flex-start, center);
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.25rem 1.25rem 0.25rem 0.25rem;
+    border-radius: $circled-border-radius;
+    cursor: pointer;
+    transition: $transition-standard;
 
     &:hover {
-      cursor: default !important;
+      background-color: $background;
     }
-  }
-
-  > button {
-    @include flex(normal, center);
-    gap: 0.8125rem;
-    width: 100%;
-    margin-bottom: 0.9375rem;
 
     > span {
       @include nunito(1.125, 400);
     }
   }
 
-  .member {
-    padding: 0.25rem 1.25rem;
-
-    &:hover {
-      background-color: $background;
-      border-radius: 6.25rem;
-      cursor: pointer;
-    }
-  }
-}
-
-.add-member-btn {
-  @include flex(center, center);
-  gap: 0.9375rem;
-  width: 100%;
-  padding: 0.75rem 1.25rem;
-  border-radius: 6.25rem;
-  cursor: pointer;
-
-  > div {
+  .add-member-btn {
     @include flex(center, center);
-    width: 2.5rem;
-    height: 2.5rem;
-
-    > img {
-      width: 2rem;
-      height: 2rem;
-      padding: 0.25rem;
-      background-color: $background;
-      border-radius: 100%;
-    }
-  }
-
-  &:not(.no-edit-right):hover {
-    background-color: $background;
-    color: $secondary;
-    cursor: pointer;
+    width: fit-content;
+    padding: 0.25rem 1.25rem 0.25rem 0.25rem;
+    margin: 0 auto;
+    margin-top: 0.75rem;
 
     > div {
+      @include flex(center, center);
+      width: 2.5rem;
+      height: 2.5rem;
+
       > img {
-        content: url("../../../../../assets/icons/chat/general/add-to-channel-hover.svg");
-        border-radius: unset;
+        width: 2rem;
+        height: 2rem;
+        padding: 0.25rem;
+        background-color: $background;
+        border-radius: 50%;
+      }
+    }
+
+    &:not(.no-edit-right):hover {
+      background-color: $background;
+      color: $secondary;
+      cursor: pointer;
+
+      > div {
+        > img {
+          content: url("../../../../../assets/icons/chat/general/add-to-channel-hover.svg");
+          border-radius: unset;
+          background-color: transparent;
+        }
       }
     }
   }
@@ -154,13 +154,8 @@
       @include flex(normal, center);
       gap: 0.9375rem;
 
-      > img {
-        filter: invert(45%) sepia(72%) saturate(824%) hue-rotate(207deg)
-          brightness(99%) contrast(92%);
-      }
-
       > span {
-        color: $primary;
+        @include nunito(1.25, 400, $accent);
       }
     }
   }
@@ -255,5 +250,5 @@
 
 .no-edit-right {
   user-select: none !important;
-  cursor: default !important;
+  cursor: not-allowed !important;
 }

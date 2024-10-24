@@ -246,7 +246,7 @@ $offline: $disabled;
 
   &:hover {
     color: $accent;
-    border: 1px solid #adb0d9;
+    border: 1px solid #a8bebc;
   }
 
   &:active {
@@ -354,14 +354,14 @@ $offline: $disabled;
 
 // ########## FONT-STYLING
 
-@mixin nunito($size: 1, $weight: 700, $color: black) {
+@mixin nunito($size: 1, $weight: 700, $color: $text) {
   font-family: Nunito, sans-serif;
   font-size: $size + rem;
   font-weight: $weight;
   color: $color;
 }
 
-@mixin fontSizer($size: 18, $weight: 700, $color: black) {
+@mixin fontSizer($size: 18, $weight: 700, $color: $text) {
   $class-name: "nunito-#{$size}-#{$weight}";
   @extend .#{$class-name};
   color: $color;

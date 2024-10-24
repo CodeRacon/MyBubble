@@ -16,8 +16,7 @@ section {
   }
 
   .name {
-    @include nunito(1.5, 700);
-    color: black;
+    @include nunito(1.5, 700, $text);
     text-align: center;
   }
 

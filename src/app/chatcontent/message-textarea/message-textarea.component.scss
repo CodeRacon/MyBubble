@@ -24,7 +24,7 @@
 .addattachment {
   @include flex(center, center);
 
-  >input {
+  > input {
     display: none;
   }
 }
@@ -55,17 +55,17 @@
       background-color: #d9dffd;
     }
 
-    >img {
+    > img {
       width: 1.5rem;
       height: 1.5rem;
       cursor: pointer;
     }
 
-    >span {
+    > span {
       max-width: 30ch;
       font-size: 0.875rem;
       font-weight: 600;
-      color: black;
+      color: $text;
     }
 
     &:hover {
@@ -81,7 +81,7 @@
       display: none;
       width: 1rem;
       height: 1rem;
-      border: 1px solid black;
+      border: 1px solid #a8bebc;
       border-radius: 50%;
       cursor: pointer;
       transition: $transition-standard;
@@ -95,7 +95,7 @@
   .remove-attachment {
     cursor: pointer;
 
-    >img {
+    > img {
       width: 1rem;
       height: 1rem;
     }
@@ -145,19 +145,19 @@
       align-items: center;
       gap: 0.3125rem;
 
-      >img {
+      > img {
         z-index: 1;
         width: 1.5rem;
         height: 1.5rem;
       }
 
-      >button {
+      > button {
         z-index: 1;
         display: flex;
         align-items: center;
       }
 
-      >span {
+      > span {
         z-index: 1;
         font-size: 24px;
         font-weight: 100;
@@ -186,25 +186,25 @@
 }
 
 #add-attachment-icon:hover {
-  >img {
+  > img {
     content: url("../../../assets/icons/chat/write-message/add-attachment-hover.svg");
   }
 }
 
 #emoji-picker-icon:hover {
-  >img {
+  > img {
     content: url("../../../assets/icons/chat/write-message/emoji-picker-hover.svg");
   }
 }
 
 #tag-person-icon:hover {
-  >img {
+  > img {
     content: url("../../../assets/icons/chat/write-message/tag-person-hover.svg");
   }
 }
 
 #tag-channel-icon:hover {
-  >img {
+  > img {
     content: url("../../../assets/icons/chat/write-message/hashtag-hover.svg");
   }
 }
@@ -215,19 +215,19 @@
   &:disabled {
     cursor: default !important;
 
-    >img {
+    > img {
       filter: grayscale(100%);
       opacity: 0.5;
     }
   }
 
-  >img {
+  > img {
     width: 1.875rem;
     height: 1.875rem;
   }
 
   &:enabled:hover {
-    >img {
+    > img {
       content: url("../../../assets/icons/chat/write-message/send-hover.svg");
     }
   }
@@ -251,7 +251,7 @@
     max-width: 90%;
   }
 
-  >img {
+  > img {
     border-radius: 1.875rem;
     object-fit: contain;
     height: 100%;

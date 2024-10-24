@@ -33,6 +33,7 @@ section {
   gap: 1.5625rem;
   width: 100%;
   overflow-y: scroll;
+  color: $text;
 
   .workspace-menu-header {
     position: sticky;
@@ -102,7 +103,7 @@ section {
 
       &:hover,
       &.active {
-        background-color: #eceefe;
+        background-color: $background;
         cursor: pointer;
 
         .hashtag {
@@ -116,6 +117,7 @@ section {
 
         .new-message-count {
           font-weight: 700;
+          color: $accent;
         }
       }
     }
@@ -184,7 +186,7 @@ section {
 
     .add-channel-btn:hover {
       background-image: url("../../../assets/icons/wsm/add-channel-1-hover.svg");
-      background-color: #eceefe;
+      background-color: $background;
       cursor: pointer;
     }
   }
@@ -257,7 +259,6 @@ section {
     line-height: normal;
     margin-left: $chnl-ml;
     padding: 0.25rem 1.25rem 0.25rem 0.25rem;
-    // padding: 0.25rem 1.25rem 0.25rem $add-chnl-btn-pl;
     gap: $chnl-gap;
 
     &:hover span {
@@ -287,10 +288,10 @@ section {
   .dm-list-item {
     @include flex(flex-start, center);
     @include buttonNoBorder;
-    @include nunito(1.125, 400, black);
+    @include nunito(1.125, 400, $text);
     gap: $dm-item-gap !important;
     margin-bottom: 0.25rem;
-    color: black !important;
+    color: $text !important;
 
     &:hover span {
       font-weight: 700;
@@ -302,13 +303,13 @@ section {
     }
   }
 
-  .dm-list-item:hover {
-    @include nunito(1.125, 400, black);
-  }
+  // .dm-list-item:hover {
+  //   @include nunito(1.125, 400, $text);
+  // }
 
-  .dm-list-item:active {
-    @include nunito(1.125, 700, #535af1);
-  }
+  // .dm-list-item:active {
+  //   @include nunito(1.125, 700, #535af1);
+  // }
 
   .avatar {
     display: flex;

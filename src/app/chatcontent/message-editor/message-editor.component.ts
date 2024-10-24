@@ -1,5 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 import Quill from 'quill';
 import { Range as QuillRange } from 'quill/core/selection';
@@ -10,9 +23,14 @@ import { ChannelService } from '../../utils/services/channel.service';
 import { AvatarDirective } from '../../utils/directives/avatar.directive';
 import { FormsModule } from '@angular/forms';
 import { EmojipickerService } from '../../utils/services/emojipicker.service';
-import { EditedTextLength, getTextBeforePreviousSign, insertItemAsSpan, isEmptyMessage, registerLockedSpanBlot } from '../../utils/quil/utility';
+import {
+  EditedTextLength,
+  getTextBeforePreviousSign,
+  insertItemAsSpan,
+  isEmptyMessage,
+  registerLockedSpanBlot,
+} from '../../utils/quil/utility';
 import { isRealUser } from '../../utils/firebase/utils';
-
 
 @Component({
   selector: 'app-message-editor',
@@ -43,7 +61,8 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
   // Quill Editor variables and configuration
   readonly maxMessageLength = 1000;
   public quill!: Quill;
-  public toolbarID = 'editor-toolbar-' + Math.random().toString(36).substring(2, 9);
+  public toolbarID =
+    'editor-toolbar-' + Math.random().toString(36).substring(2, 9);
   public showToolBarElements: number[] = [];
   private savedRange: QuillRange | null = null;
   public showToolbar = false;
@@ -51,7 +70,7 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     minHeight: this.minHeight_rem + 'rem',
     maxHeight: this.maxHeight_rem + 'rem',
     width: '100%',
-    color: 'black',
+    color: '$text',
     fontFamily: 'Nunito',
     border: 'none',
   };
@@ -85,17 +104,16 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
   private lastItem: User | Channel | null = null;
   public currentPickerIndex = -1;
 
-  constructor(private _cdr: ChangeDetectorRef) { }
+  constructor(private _cdr: ChangeDetectorRef) {}
 
   /**
    * Lifecycle hook that is called when the component is destroyed.
-   * 
+   *
    * This method disconnects the resize observer if it exists to prevent memory leaks.
    */
   ngOnDestroy(): void {
     if (this.resizeobserver) this.resizeobserver.disconnect();
   }
-
 
   /**
    * Lifecycle hook that is called after a component's view has been fully initialized.
@@ -130,7 +148,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     this.resizeobserver.observe(this.toolbar.nativeElement);
   }
 
-
   /**
    * Opens the emoji picker and inserts the selected emoji into the editor at the current cursor position.
    *
@@ -158,7 +175,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-
   /**
    * Determines if the given item is an instance of the User class.
    *
@@ -169,7 +185,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     return item instanceof User;
   }
 
-
   /**
    * Retrieves the current message content from the Quill editor as semantic HTML.
    *
@@ -178,7 +193,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
   getMessageAsHTML() {
     return this.quill.root.innerHTML;
   }
-
 
   /**
    * Clears the text editor by setting its content to an empty string
@@ -189,13 +203,11 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     this.quill.history.clear();
   }
 
-
   private handleToolBarResize(width: number) {
     if (width < 300) this.showToolBarElements = [1, 3, 5];
     else if (width < 400) this.showToolBarElements = [1, 3, 4, 5];
     else this.showToolBarElements = [1, 2, 3, 4, 5];
   }
-
 
   /**
    * Adds event listeners to the Quill editor instance to handle text changes.
@@ -215,20 +227,33 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
       const [delta, oldDelta, source] = args;
       if (source === 'user' && eventName === 'text-change') {
         if (this.showPicker) {
-          const newSearchString = getTextBeforePreviousSign(this.quill, this.getLastOrCurrentSelection(), this.pickersign);
+          const newSearchString = getTextBeforePreviousSign(
+            this.quill,
+            this.getLastOrCurrentSelection(),
+            this.pickersign
+          );
           if (newSearchString === null) this.closeListPicker();
           else this.updatePickerItems(newSearchString);
         }
-        const hasImage = delta.ops.some((op: any) => op.insert && op.insert.image);
+        const hasImage = delta.ops.some(
+          (op: any) => op.insert && op.insert.image
+        );
         const messageLength = this.quill.getLength();
         if (source === 'user' && hasImage) this.quill.history.undo();
-        else if (messageLength > this.maxMessageLength) this.quill.deleteText(this.maxMessageLength, messageLength - this.maxMessageLength);
-        this.textLengthChanged.emit({ messageEmpty: isEmptyMessage(this.quill.root.innerHTML), maxLength: this.maxMessageLength, textLength: this.quill.getLength() });
+        else if (messageLength > this.maxMessageLength)
+          this.quill.deleteText(
+            this.maxMessageLength,
+            messageLength - this.maxMessageLength
+          );
+        this.textLengthChanged.emit({
+          messageEmpty: isEmptyMessage(this.quill.root.innerHTML),
+          maxLength: this.maxMessageLength,
+          textLength: this.quill.getLength(),
+        });
         this._cdr.detectChanges();
       }
     });
   }
-
 
   /**
    * Adds focus and blur event listeners to the Quill editor element.
@@ -252,7 +277,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
       this.closeListPicker();
     });
   }
-
 
   /**
    * Adds custom key bindings to the Quill editor instance.
@@ -291,7 +315,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     this.quill.keyboard.bindings['Enter'] = [];
   }
 
-
   /**
    * Handles key events for the picker selection.
    *
@@ -308,13 +331,21 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
   handlePickerSelectionKeys(key: string): boolean {
     if (!this.showPicker) return true;
     if (key === 'ArrowUp') {
-      this.setCurrentPickerIndex((this.currentPickerIndex - 1 + this.pickerItems.length) % this.pickerItems.length);
+      this.setCurrentPickerIndex(
+        (this.currentPickerIndex - 1 + this.pickerItems.length) %
+          this.pickerItems.length
+      );
       return false;
     } else if (key === 'ArrowDown') {
-      this.setCurrentPickerIndex((this.currentPickerIndex + 1) % this.pickerItems.length);
+      this.setCurrentPickerIndex(
+        (this.currentPickerIndex + 1) % this.pickerItems.length
+      );
       return false;
     } else if (key === 'Select') {
-      const currentItem = this.currentPickerIndex === -1 ? this.lastItem : this.pickerItems[this.currentPickerIndex];
+      const currentItem =
+        this.currentPickerIndex === -1
+          ? this.lastItem
+          : this.pickerItems[this.currentPickerIndex];
       if (currentItem) this.choosePickerItem(currentItem);
       return true;
     } else if (key === 'Escape') {
@@ -323,7 +354,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     }
     return true;
   }
-
 
   /**
    * Handles the selection of an item from the picker.
@@ -337,7 +367,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     this.closeListPicker();
   }
 
-
   /**
    * Retrieves the last or current selection range in the Quill editor.
    *
@@ -349,11 +378,9 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     return this.savedRange;
   }
 
-
   listKeysValid() {
     return this.quill && this.quill.hasFocus();
   }
-
 
   /**
    * Sets the current picker index and updates the UI accordingly.
@@ -377,7 +404,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
   /**
    * Scrolls the view to the selected item in the picker list.
    *
@@ -391,7 +417,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
         block: 'center',
       });
   }
-
 
   /**
    * Updates the picker items based on the search term and the current picker sign.
@@ -408,14 +433,22 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
    */
   updatePickerItems(searchTerm: string) {
     if (this.pickersign === '@') {
-      this.pickerItems = this.userservice.users.filter((user) => isRealUser(user) && (searchTerm === '' || user.name.toLowerCase().includes(searchTerm.toLowerCase())));
+      this.pickerItems = this.userservice.users.filter(
+        (user) =>
+          isRealUser(user) &&
+          (searchTerm === '' ||
+            user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
       this.setCurrentPickerIndex(-1);
     } else if (this.pickersign === '#') {
-      this.pickerItems = this.channelservice.channels.filter((channel) => !channel.defaultChannel && channel.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      this.pickerItems = this.channelservice.channels.filter(
+        (channel) =>
+          !channel.defaultChannel &&
+          channel.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
       this.setCurrentPickerIndex(-1);
     }
   }
-
 
   /**
    * Toggles the visibility of the list picker and updates the picker items.
@@ -428,7 +461,6 @@ export class MessageEditorComponent implements AfterViewInit, OnDestroy {
     this.pickersign = pickerSign;
     this.updatePickerItems('');
   }
-
 
   /**
    * Closes the list picker if it is currently shown.

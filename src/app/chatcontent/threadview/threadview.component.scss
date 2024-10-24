@@ -68,12 +68,12 @@ $header-pl: clamp(1.25rem, 3.472vw + -1.354rem, 2.8125rem);
     > button:hover {
       cursor: pointer;
       background-image: url("../../../assets/icons/chat/general/close-hover.svg");
-      background-color: #eceefe;
+      background-color: $background;
     }
   }
 
   .thread-headline {
-    @include nunito(1.5, 700, black);
+    @include nunito(1.5, 700, $text);
   }
 
   .thread-headline-channel-name {
@@ -136,7 +136,7 @@ $header-pl: clamp(1.25rem, 3.472vw + -1.354rem, 2.8125rem);
   }
 }
 
-.chatview-editor{
+.chatview-editor {
   position: relative;
   width: 100%;
 }

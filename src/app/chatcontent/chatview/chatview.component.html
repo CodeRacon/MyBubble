@@ -3,58 +3,96 @@
   <section class="chatview-content default-channel">
     <app-message-greeting></app-message-greeting>
   </section>
-  }
-  @else {
+  } @else {
   <!-- Header -->
   <section class="chatview-header">
     @if(isAChannel){
-    <button class="chatview-channel-name" popovertarget="channel-editor-popover">
+    <button
+      class="chatview-channel-name"
+      popovertarget="channel-editor-popover"
+    >
       <div>
         <div>
-          <img src="assets/icons/chat/general/hashtag.svg" alt="#" />
+          <img
+            src="assets/icons/chat/general/hashtag.svg"
+            class="hashtag-icon"
+            alt="#"
+          />
           <span>{{ getTitle(navigationService.chatViewObject) }}</span>
         </div>
-        <img src="assets/icons/modals/expand-down.svg" alt="arrow-down" />
+        <img
+          src="assets/icons/modals/expand-down.svg"
+          class="expand-icon"
+          alt="arrow-down"
+        />
       </div>
     </button>
 
     <div class="member-avatar-overview">
-      <button class="member-avatars-ctn" popovertarget="channel-member-overview-popover"
-        (click)="openMemberListPopover('memberList')">
+      <button
+        class="member-avatars-ctn"
+        popovertarget="channel-member-overview-popover"
+        (click)="openMemberListPopover('memberList')"
+      >
         <div class="d-flex">
           @for (member of requiredAvatars; track member) {
-          <div appAvatar [user]="userService.getUserByID(member)" context="chat-channel-members-small"
-            class="member-avatar"></div>
+          <div
+            appAvatar
+            [user]="userService.getUserByID(member)"
+            context="chat-channel-members-small"
+            class="member-avatar"
+          ></div>
           }
         </div>
         <span>{{ getNumberOfMembers(navigationService.chatViewObject) }}</span>
       </button>
       @if(isAllowedToAddMember()) {
-      <button [ngClass]="{
+      <button
+        [ngClass]="{
           'add-member-icon-ctn': true,
           'no-edit-right': !isAllowedToAddMember()
-        }" [title]="showNoRightToEditInfo()" popovertarget="channel-member-overview-popover"
-        (click)="openMemberListPopover('addMember')" [disabled]="!isAllowedToAddMember()">
-        <img [ngClass]="{ 'no-edit-right': !isAllowedToAddMember() }" src="assets/icons/chat/general/add-to-channel.svg"
-          alt="add-member-icon" />
+        }"
+        [title]="showNoRightToEditInfo()"
+        popovertarget="channel-member-overview-popover"
+        (click)="openMemberListPopover('addMember')"
+        [disabled]="!isAllowedToAddMember()"
+      >
+        <img
+          [ngClass]="{ 'no-edit-right': !isAllowedToAddMember() }"
+          src="assets/icons/chat/general/add-to-channel.svg"
+          alt="add-member-icon"
+        />
       </button>
-    }
+      }
     </div>
     }@else if(isAChat){
-    <button (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)" [attr.popovertarget]="
-      navigationService.returnPopoverTarget(getChatPartnerID(currentContext)!)
-    " class="chatview-chat-partner-name">
-      <div appAvatar [user]="getChatPartner(currentContext)" context="chat-dm-header"></div>
+    <button
+      (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)"
+      [attr.popovertarget]="
+        navigationService.returnPopoverTarget(getChatPartnerID(currentContext)!)
+      "
+      class="chatview-chat-partner-name"
+    >
+      <div
+        appAvatar
+        [user]="getChatPartner(currentContext)"
+        context="chat-dm-header"
+      ></div>
       <span>{{ returnChatPartnerName() }}</span>
     </button>
     }
   </section>
   <!-- MessageList -->
   <section class="chatview-content">
-    <div class="chat-messages-content" [ngClass]="{ 'no-messages': currentContext.messagesCount == 0 }">
+    <div
+      class="chat-messages-content"
+      [ngClass]="{ 'no-messages': currentContext.messagesCount == 0 }"
+    >
       @if(currentContext.messagesCount > 0){
-      <app-messages-list-view [messagesPath]="navigationService.chatViewPath"
-        [currentObject]="currentContext"></app-messages-list-view>
+      <app-messages-list-view
+        [messagesPath]="navigationService.chatViewPath"
+        [currentObject]="currentContext"
+      ></app-messages-list-view>
 
       }@else{
       <section class="no-messages-ctn">
@@ -68,14 +106,25 @@
           Channel
           {{ getChannelCreationTime(navigationService.chatViewObject) }}
           erstellt. Das ist der Anfang des Channel
-          <span> # {{ getTitle(navigationService.chatViewObject) }}</span>.
+          <span> # {{ getTitle(navigationService.chatViewObject) }}</span
+          >.
         </div>
         }@else if(isAChat){
         <section class="no-pm-ctn">
-          <button (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)" [attr.popovertarget]="
-            navigationService.returnPopoverTarget(getChatPartnerID(currentContext)!)
-            " class="chat-partner-name">
-            <div appAvatar [user]="getChatPartner(currentContext)!" context="thread-message"></div>
+          <button
+            (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)"
+            [attr.popovertarget]="
+              navigationService.returnPopoverTarget(
+                getChatPartnerID(currentContext)!
+              )
+            "
+            class="chat-partner-name"
+          >
+            <div
+              appAvatar
+              [user]="getChatPartner(currentContext)!"
+              context="thread-message"
+            ></div>
             <span>{{ returnChatPartnerName() }}</span>
           </button>
           @if(isSelfChat()){
@@ -88,9 +137,14 @@
           }@else {
           <p>
             Dieser Unterhaltung findet nur zwischen
-            <button (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)" [attr.popovertarget]="
-              navigationService.returnPopoverTarget(getChatPartnerID(currentContext)!)
-              ">
+            <button
+              (click)="setSelectedUserObject(getChatPartnerID(currentContext)!)"
+              [attr.popovertarget]="
+                navigationService.returnPopoverTarget(
+                  getChatPartnerID(currentContext)!
+                )
+              "
+            >
               &#64;{{ returnChatPartnerName() }}
             </button>
             und dir statt.
@@ -103,19 +157,30 @@
     </div>
   </section>
   <!-- Editor -->
-   <section class="chatview-editor">
-     <app-message-textarea [messagesCollectionObject]="navigationService.chatViewObject"></app-message-textarea>
-   </section>  
+  <section class="chatview-editor">
+    <app-message-textarea
+      [messagesCollectionObject]="navigationService.chatViewObject"
+    ></app-message-textarea>
+  </section>
   }
 
+  <app-popover-channel-editor
+    id="channel-editor-popover"
+    popover
+    [currentChannel]="currentContext"
+    (updatedChannel)="channelSubject.next($event)"
+  ></app-popover-channel-editor>
 
-  <app-popover-channel-editor id="channel-editor-popover" popover [currentChannel]="currentContext"
-    (updatedChannel)="channelSubject.next($event)"></app-popover-channel-editor>
-
-  <app-popover-channel-member-overview id="channel-member-overview-popover" popover [currentChannel]="currentContext"
-    [memberList]="memberList" (memberListChange)="memberList = $event"
-    (addMemberPopoverChange)="addMemberPopover = $event" (updatedChannel)="channelSubject.next($event)"
-    [addMemberPopover]="addMemberPopover"></app-popover-channel-member-overview>
+  <app-popover-channel-member-overview
+    id="channel-member-overview-popover"
+    popover
+    [currentChannel]="currentContext"
+    [memberList]="memberList"
+    (memberListChange)="memberList = $event"
+    (addMemberPopoverChange)="addMemberPopover = $event"
+    (updatedChannel)="channelSubject.next($event)"
+    [addMemberPopover]="addMemberPopover"
+  ></app-popover-channel-member-overview>
 
   <app-popover-member-profile></app-popover-member-profile>
 </main>

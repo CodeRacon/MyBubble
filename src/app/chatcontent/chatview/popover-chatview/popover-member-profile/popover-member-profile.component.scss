@@ -10,7 +10,7 @@
   cursor: pointer;
 
   span.username {
-    @include fontSizer(32, 700, black);
+    @include nunito(2, 700, $text);
   }
 
   span,
@@ -41,7 +41,7 @@
   .profile-details {
     @include flex(space-between, center);
     flex-direction: column;
-    min-width: 20rem;
+    min-width: 1.25rem;
     height: 100%;
 
     gap: 0.75rem;
@@ -54,7 +54,7 @@
 
       span.username {
         align-self: flex-start;
-        @include fontSizer(32, 700, black);
+        @include nunito(2, 700, $text);
         line-height: 100%;
         text-wrap: balance;
         padding: 0;
@@ -80,7 +80,7 @@
     }
 
     span {
-      @include fontSizer(20, 600);
+      @include nunito(1.25, 600);
     }
   }
 
@@ -96,7 +96,7 @@
       gap: 1rem;
 
       span {
-        @include fontSizer(20, 700, black);
+        @include nunito(1.25, 700, $text);
       }
 
       a {
@@ -125,7 +125,7 @@
     height: fit-content;
 
     .modal-title {
-      @include fontSizer(24, 700, black);
+      @include nunito(1.5, 700, $text);
     }
   }
 }

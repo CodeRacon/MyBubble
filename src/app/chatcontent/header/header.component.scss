@@ -17,6 +17,8 @@ section.header {
     @media (width < 560px) {
       flex-wrap: wrap;
       row-gap: 1rem;
+      width: 100%;
+
       padding: 0;
     }
 
@@ -48,7 +50,7 @@ section.header {
 
       .logo-text {
         display: none;
-        @include nunito(2, 700, black);
+        @include nunito(2, 700, $text);
 
         @media (width < 560px) {
           display: flex;

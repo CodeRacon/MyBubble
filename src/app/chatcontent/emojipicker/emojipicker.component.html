@@ -1,6 +1,21 @@
 <section id="popover-emoji-picker" popover>
-  <emoji-mart (emojiClick)="emojiService.handleEmojiClick($event)" [autoFocus]="true"
-    [include]="['search', 'recent', 'people', 'nature', 'food', 'activity', 'travel', 'objects', 'symbols']"
+  <emoji-mart
+    (emojiClick)="emojiService.handleEmojiClick($event)"
+    [autoFocus]="true"
+    [include]="[
+      'search',
+      'recent',
+      'people',
+      'nature',
+      'food',
+      'activity',
+      'travel',
+      'objects',
+      'symbols'
+    ]"
     [isNative]="true"
-    title="Wähle ein Emoji..." emoji="point_up" color="#797ef3"></emoji-mart>
+    title="Wähle ein Emoji..."
+    emoji="point_up"
+    color="#3c736f"
+  ></emoji-mart>
 </section>

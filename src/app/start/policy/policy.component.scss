@@ -72,6 +72,7 @@ section {
     scroll-behavior: smooth;
 
     h1 {
+      color: $accent;
       line-height: 100%;
       margin-top: 0 !important;
     }
@@ -85,7 +86,7 @@ section {
 
     .index {
       a {
-        color: $primary;
+        color: $accent;
         transition: $transition-standard;
 
         &:hover {
@@ -95,12 +96,12 @@ section {
       }
 
       ::marker {
-        color: $primary;
+        color: $accent;
       }
     }
 
     .accentuated {
-      color: $primary;
+      color: $mail;
       transition: $transition-standard;
 
       &:hover {
