@@ -1,7 +1,25 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, inject, Input, OnDestroy, OnInit, Output, ViewChild, } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { serverTimestamp } from '@angular/fire/firestore';
 import { NavigationService } from '../../../../utils/services/navigation.service';
-import { IReactions, Message, StoredAttachment } from '../../../../shared/models/message.class';
+import {
+  IReactions,
+  Message,
+  StoredAttachment,
+} from '../../../../shared/models/message.class';
 import { MessageService } from '../../../../utils/services/message.service';
 import { UsersService } from '../../../../utils/services/user.service';
 import { CommonModule } from '@angular/common';
@@ -13,7 +31,10 @@ import { ChannelService } from '../../../../utils/services/channel.service';
 import { Channel } from '../../../../shared/models/channel.class';
 import { EmojipickerService } from '../../../../utils/services/emojipicker.service';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { EditedTextLength, isEmptyMessage } from '../../../../utils/quil/utility';
+import {
+  EditedTextLength,
+  isEmptyMessage,
+} from '../../../../utils/quil/utility';
 
 @Component({
   selector: 'app-message',
@@ -28,13 +49,15 @@ import { EditedTextLength, isEmptyMessage } from '../../../../utils/quil/utility
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
-export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChecked {
-
+export class MessageComponent
+  implements OnDestroy, AfterViewInit, AfterViewChecked
+{
   private viewObserver!: IntersectionObserver;
 
   @ViewChild('messagemaindiv', { static: false }) messageMainDiv!: ElementRef;
   @ViewChild('messagediv', { static: false }) messageDiv!: ElementRef;
-  @ViewChild('messageeditor', { static: false }) messageEditor!: MessageEditorComponent;
+  @ViewChild('messageeditor', { static: false })
+  messageEditor!: MessageEditorComponent;
 
   public userService = inject(UsersService);
   public navigationService = inject(NavigationService);
@@ -53,8 +76,10 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
   @Input() set messageData(newMessage: Message) {
     this._messageData = newMessage;
     this.initMessageChangeSubscription();
-    if (this._messageData.answerCount > 0) this.channelService.calculateUnreadMessagesCount(this._messageData);
-    this.messagefromUser = newMessage.creatorID === this.userService.currentUserID;
+    if (this._messageData.answerCount > 0)
+      this.channelService.calculateUnreadMessagesCount(this._messageData);
+    this.messagefromUser =
+      newMessage.creatorID === this.userService.currentUserID;
     this.fillMessageContentHTML();
   }
 
@@ -71,7 +96,9 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
   private messageChangeSubscription: any;
   public _isHovered = false;
   get isHovered() {
-    return this._isHovered && this.isAttachmentsHovered.every((hovered) => !hovered);
+    return (
+      this._isHovered && this.isAttachmentsHovered.every((hovered) => !hovered)
+    );
   }
   public isAttachmentsHovered: boolean[] = [];
   public showEditMessagePopup = false;
@@ -82,12 +109,13 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
     return this.userService.getUserByID(this._messageData.creatorID);
   }
 
-  constructor(private _cdr: ChangeDetectorRef, private el: ElementRef) { }
+  constructor(private _cdr: ChangeDetectorRef, private el: ElementRef) {}
 
   ngOnDestroy(): void {
     if (this.resizeobserver) this.resizeobserver.disconnect();
     if (this.viewObserver) this.viewObserver.disconnect();
-    if (this.messageChangeSubscription) this.messageChangeSubscription.unsubscribe();
+    if (this.messageChangeSubscription)
+      this.messageChangeSubscription.unsubscribe();
   }
 
   handleEditorTextLengthChanged(event: EditedTextLength) {
@@ -111,16 +139,17 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
 
   /**
    * Initializes a ResizeObserver to monitor the width of the message element and update the UI accordingly.
-   * 
+   *
    * The ResizeObserver is used to detect changes in the width of the message element. When the width changes,
    * the `handleEditorResize` and `handleMostUsedEmojisCountChange` methods are called to update the UI based on the new width.
-   * 
+   *
    * The ResizeObserver is attached to the message element and the initial width is also used to call the `handleEditorResize` method.
    */
   initResizeObserver() {
     this.resizeobserver = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
-        if (this.messageEditorOpen) this.handleEditorResize(entry.contentRect.width);
+        if (this.messageEditorOpen)
+          this.handleEditorResize(entry.contentRect.width);
         this.handleMostUsedEmojisCountChange(entry.contentRect.width);
       });
     });
@@ -130,17 +159,17 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
 
   /**
    * Initializes an IntersectionObserver to monitor the visibility of the message element.
-   * 
+   *
    * If the message is unread, an IntersectionObserver is created to monitor the visibility of the message element.
    * When the message becomes visible in the viewport (with a threshold of 90%), the `messageViewed` event is emitted
    * and the observer is disconnected.
-   * 
+   *
    * The observer is set up with a delay of 1 second to allow for any initial rendering to complete before
    * starting the observation.
    */
   initViewOberserver() {
     if (this.isUnread) {
-      const options = { root: null, rootMargin: '0px', threshold: 0.9, };
+      const options = { root: null, rootMargin: '0px', threshold: 0.9 };
       this.viewObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -157,30 +186,35 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
 
   /**
    * Initializes a subscription to the `changeMessage$` observable of the `_messageData` property.
-   * 
+   *
    * When the `_messageData` object emits a change, this method updates the `isAttachmentsHovered` array,
    * calls the `fillMessageContentHTML` method to update the message content, and triggers change detection.
-   * 
+   *
    * This method is called to set up the subscription when the component is initialized, and it also
    * unsubscribes from any previous subscription to avoid memory leaks.
    */
   initMessageChangeSubscription() {
-    if (this.messageChangeSubscription) this.messageChangeSubscription.unsubscribe();
-    this.messageChangeSubscription = this._messageData.changeMessage$.subscribe(() => {
-      this.isAttachmentsHovered = new Array(this._messageData.attachments.length).fill(false);
-      this.fillMessageContentHTML();
-      this._cdr.detectChanges();
-    });
+    if (this.messageChangeSubscription)
+      this.messageChangeSubscription.unsubscribe();
+    this.messageChangeSubscription = this._messageData.changeMessage$.subscribe(
+      () => {
+        this.isAttachmentsHovered = new Array(
+          this._messageData.attachments.length
+        ).fill(false);
+        this.fillMessageContentHTML();
+        this._cdr.detectChanges();
+      }
+    );
   }
 
   /**
    * Handles the resizing of the editor based on the provided width.
-   * 
+   *
    * This method is responsible for updating the visibility of the big and small buttons
    * based on the width of the editor. If the width is greater than 700, the big buttons
    * are shown and the small buttons are hidden. Otherwise, the small buttons are shown
    * and the big buttons are hidden.
-   * 
+   *
    * @param width The current width of the editor.
    */
   handleEditorResize(width: number) {
@@ -190,14 +224,14 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
 
   /**
    * Handles the change in the number of most used emojis to display based on the width of the editor.
-   * 
+   *
    * This method is responsible for updating the `showMostUsedEmojisCount` property based on the provided width.
    * The number of most used emojis to display is determined by the following rules:
    * - If the width is less than 550, show 0 most used emojis.
    * - If the width is between 550 and 700, show 2 most used emojis.
    * - If the width is between 700 and 850, show 3 most used emojis.
    * - If the width is greater than or equal to 850, show 4 most used emojis.
-   * 
+   *
    * @param width The current width of the editor.
    */
   handleMostUsedEmojisCountChange(width: number) {
@@ -239,9 +273,14 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
    * @returns A string representing the users who have reacted to the given reaction.
    */
   getReactionUsers(reaction: IReactions): string {
-    const currentUserReacted = reaction.userIDs.includes(this.userService.currentUserID);
-    const otherUsers = reaction.userIDs.filter((id) => id !== this.userService.currentUserID)
-      .map((id) => this.userService.getUserByID(id)?.name || 'Unbekannter Nutzer');
+    const currentUserReacted = reaction.userIDs.includes(
+      this.userService.currentUserID
+    );
+    const otherUsers = reaction.userIDs
+      .filter((id) => id !== this.userService.currentUserID)
+      .map(
+        (id) => this.userService.getUserByID(id)?.name || 'Unbekannter Nutzer'
+      );
     if (currentUserReacted) {
       if (otherUsers.length === 1) {
         return `Du und ${otherUsers[0]}`;
@@ -294,7 +333,6 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
     link.click();
   }
 
-
   /**
    * Deletes a stored attachment from the message.
    *
@@ -344,7 +382,7 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
     const spanChannel = this.getChannelOnlyWhenNotCurrent(span.id);
     if (spanChannel) {
       span.classList.add('highlight-item');
-      span.classList.add('highlight-can-clicked');
+      span.classList.add('highlight-clickable');
       span.addEventListener('click', (event) => {
         event.stopPropagation();
         this.navigationService.setChatViewObject(spanChannel);
@@ -379,7 +417,7 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
    */
   prepareUserSpan(span: HTMLSpanElement) {
     span.classList.add('highlight-item');
-    span.classList.add('highlight-can-clicked');
+    span.classList.add('highlight-clickable');
     span.addEventListener('click', (event) => {
       event.stopPropagation();
       this.setSelectedUserObject(span.id);
@@ -390,7 +428,6 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
       if (popoverElement) (popoverElement as any).showPopover();
     });
   }
-
 
   /**
    * Updates the content of a message and marks it as edited.
@@ -446,7 +483,10 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
    */
   async toggleReaction(reactionType: string) {
     if (await this.userService.ifCurrentUserVerified()) {
-      this.messageService.toggleReactionToMessage(this._messageData, reactionType);
+      this.messageService.toggleReactionToMessage(
+        this._messageData,
+        reactionType
+      );
     }
   }
 
@@ -490,11 +530,21 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
    * @returns A formatted string representing the date or time of the answered message.
    */
   getLastAnsweredMessagedDateOrTime(answerAt: Date) {
-    const now = new Date(); const isToday = answerAt.toDateString() === now.toDateString();
+    const now = new Date();
+    const isToday = answerAt.toDateString() === now.toDateString();
     if (isToday) {
-      return answerAt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + ' Uhr';
+      return (
+        answerAt.toLocaleTimeString('de-DE', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }) + ' Uhr'
+      );
     } else {
-      return answerAt.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      return answerAt.toLocaleDateString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
     }
   }
 
@@ -522,7 +572,10 @@ export class MessageComponent implements OnDestroy, AfterViewInit, AfterViewChec
     if (this.messageEditorModus) {
       setTimeout(() => {
         if (this.messageMainDiv) {
-          this.messageMainDiv.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          this.messageMainDiv.nativeElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
         }
       }, 500);
     } else {
