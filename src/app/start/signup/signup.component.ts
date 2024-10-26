@@ -1,11 +1,33 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UsersService } from '../../utils/services/user.service';
-import { emailValidator, nameValidator, passwordValidator } from '../../utils/form-validators';
+import {
+  emailValidator,
+  nameValidator,
+  passwordValidator,
+} from '../../utils/form-validators';
 import { ChooesavatarComponent } from '../chooesavatar/chooesavatar.component';
-import { Auth, createUserWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
-import { addDoc, collection, doc, Firestore, serverTimestamp, updateDoc } from '@angular/fire/firestore';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from '@angular/fire/auth';
+import {
+  addDoc,
+  collection,
+  doc,
+  Firestore,
+  serverTimestamp,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { ChannelService } from '../../utils/services/channel.service';
 import { MessageService } from '../../utils/services/message.service';
 import { dabubbleBotId, newUserMessages } from '../../utils/firebase/utils';
@@ -24,7 +46,6 @@ import { NavigationService } from '../../utils/services/navigation.service';
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
-
   constructor() {
     const formData = sessionStorage.getItem('signupForm');
     if (formData) this.signupForm.setValue(JSON.parse(formData));
@@ -47,9 +68,11 @@ export class SignupComponent {
     name: new FormControl('', [Validators.required, nameValidator()]),
     email: new FormControl('', [Validators.required, emailValidator()]),
     password: new FormControl('', [Validators.required, passwordValidator()]),
-    checkboxPP: new FormControl(false, [Validators.required, Validators.requiredTrue,]),
+    checkboxPP: new FormControl(false, [
+      Validators.required,
+      Validators.requiredTrue,
+    ]),
   });
-
 
   /**
    * Saves the current signup form data to the session storage.
@@ -60,13 +83,12 @@ export class SignupComponent {
     sessionStorage.setItem('signupForm', JSON.stringify(this.signupForm.value));
   }
 
-
   /**
    * Handles the submission of the sign-up form.
-   * 
+   *
    * @param {Event} event - The event triggered by form submission.
    * @returns {Promise<void>} A promise that resolves when the form submission process is complete.
-   * 
+   *
    * This method performs the following actions:
    * - Prevents the default form submission behavior.
    * - Clears any existing error messages.
@@ -94,7 +116,6 @@ export class SignupComponent {
     }
   }
 
-
   /**
    * Navigates back to the home page after saving form data to session storage.
    * This method first calls `saveFormDataToSessionStorage` to ensure that any
@@ -106,7 +127,6 @@ export class SignupComponent {
     this.router.navigate(['/']);
   }
 
-
   /**
    * Navigates to the policy page after saving the form data to session storage.
    * This method first calls `saveFormDataToSessionStorage` to persist the current form data,
@@ -117,50 +137,73 @@ export class SignupComponent {
     this.router.navigate(['/policy']);
   }
 
-
   /**
    * Registers a new user with the provided name, email, and password.
-   * 
+   *
    * This function performs the following steps:
    * 1. Creates a new user with the provided email and password using Firebase Authentication.
    * 2. Updates the user's profile with the provided display name.
    * 3. Adds a new document to the 'users' collection in Firestore with the user's details.
    * 4. Sends an email verification link to the user.
-   * 
+   *
    * @param name - The display name of the new user.
    * @param email - The email address of the new user.
    * @param password - The password for the new user.
    * @returns A promise that resolves to an empty string if the registration is successful, or an error message if it fails.
    */
-  async registerNewUser(name: string, email: string, password: string): Promise<string> {
+  async registerNewUser(
+    name: string,
+    email: string,
+    password: string
+  ): Promise<string> {
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.firebaseauth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        this.firebaseauth,
+        email,
+        password
+      );
       await updateProfile(userCredential.user, { displayName: name });
-      const data = await addDoc(collection(this.firestore, '/users'), { name: name, email: email, online: false, signupAt: serverTimestamp(), avatar: 0 });
+      const data = await addDoc(collection(this.firestore, '/users'), {
+        name: name,
+        email: email,
+        online: false,
+        signupAt: serverTimestamp(),
+        avatar: 0,
+      });
       this.implementSomeNewUserStuff(data.id);
       this.userservice.sendEmailVerificationLink();
       return '';
     } catch (error) {
-      console.error('userservice/auth: Error registering user(', (error as Error).message, ')');
+      console.error(
+        'userservice/auth: Error registering user(',
+        (error as Error).message,
+        ')'
+      );
       return (error as Error).message;
     }
   }
 
-
-
   private async implementSomeNewUserStuff(newUserID: string) {
-    const selfChatID = await this.channelService.addChatWithUserOnFirestore(newUserID);
-    const dabubbleBotChatID = await this.channelService.addChatWithUserOnFirestore(dabubbleBotId); // DABubble Bot
+    const selfChatID = await this.channelService.addChatWithUserOnFirestore(
+      newUserID
+    );
+    const dabubbleBotChatID =
+      await this.channelService.addChatWithUserOnFirestore(dabubbleBotId); // MyBubble Bot
     if (dabubbleBotChatID) {
-      const dabubbleBotChat = this.channelService.getChatByID(dabubbleBotChatID);
+      const dabubbleBotChat =
+        this.channelService.getChatByID(dabubbleBotChatID);
       if (dabubbleBotChat) {
         newUserMessages.forEach(async (message) => {
-          await this.messageService.addNewMessageToCollection(dabubbleBotChat, message, [], dabubbleBotId);
+          await this.messageService.addNewMessageToCollection(
+            dabubbleBotChat,
+            message,
+            [],
+            dabubbleBotId
+          );
         });
       }
     }
   }
-
 
   /**
    * Handles the success event of choosing an avatar.
@@ -173,10 +216,9 @@ export class SignupComponent {
     }, 2000);
   }
 
-
   /**
    * Handles the successful signup event.
-   * 
+   *
    * This method is triggered when the signup process completes successfully.
    * It sets the `showChooseAvatarMask` property to `true`, which likely
    * displays a mask or overlay for choosing an avatar.
@@ -184,7 +226,6 @@ export class SignupComponent {
   handleSignupSuccess() {
     this.showChooseAvatarMask = true;
   }
-
 
   /**
    * Handles signup errors by checking the error message and setting appropriate error messages.
@@ -198,7 +239,6 @@ export class SignupComponent {
     console.clear();
   }
 
-
   /**
    * Clears all error messages displayed in the signup component.
    * Currently, it resets the error message related to email existence.
@@ -206,6 +246,4 @@ export class SignupComponent {
   clearAllErrorSpans() {
     this.errorEmailExists = '';
   }
-
-
 }
