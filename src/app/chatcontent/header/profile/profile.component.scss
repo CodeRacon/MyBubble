@@ -236,6 +236,10 @@ $username-fs: clamp(1.5rem, 2.062vw + 0.351rem, 2rem);
         background-repeat: no-repeat;
         cursor: pointer;
         transition: $transition-standard;
+
+        @media (width < 426px) {
+          background-size: 4rem 4rem;
+        }
       }
 
       &:hover {
@@ -244,6 +248,10 @@ $username-fs: clamp(1.5rem, 2.062vw + 0.351rem, 2rem);
           backdrop-filter: blur(1px);
           background-position: center;
           background-size: 4rem 4rem;
+
+          @media (width < 426px) {
+            background-size: 6rem 6rem;
+          }
         }
       }
     }
