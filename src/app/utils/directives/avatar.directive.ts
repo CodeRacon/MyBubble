@@ -261,7 +261,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
       case 'choose-avatar-small':
@@ -271,7 +271,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
       case 'wsm-list':
@@ -281,7 +281,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: true,
         };
       case 'wsm-add-channel':
@@ -291,7 +291,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
       case 'search':
@@ -301,7 +301,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
       case 'outer-profile':
@@ -309,9 +309,9 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgSize: '4.5rem',
           statusSize: '1rem',
           imgBorderColor: 'transparent',
-          pseudoBorderColor: '#eceefe',
+          pseudoBorderColor: '#ecefe9',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: true,
         };
 
@@ -355,18 +355,18 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
 
       case 'chat-channel-members-big':
         return {
           imgSize: '3.125rem',
-          statusSize: '1rem',
+          statusSize: '0.875rem',
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: true,
         };
 
@@ -377,7 +377,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
 
@@ -388,7 +388,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: false,
         };
       default:
@@ -398,7 +398,7 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
           imgBorderColor: 'transparent',
           pseudoBorderColor: '#fff',
           pseudoBackgroundColor: 'offline',
-          hoverPseudoBorderColor: '#eceefe',
+          hoverPseudoBorderColor: '#ecefe9',
           showStatusIndicator: true,
         };
     }
