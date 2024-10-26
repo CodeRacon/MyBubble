@@ -19,6 +19,7 @@
   h4 {
     margin: 0;
     font-size: 1.5rem;
+    color: $text;
   }
 
   > button {
@@ -47,14 +48,6 @@
   padding: 1rem 2.5rem;
   overflow-y: auto;
 
-  // .current-user {
-  //   user-select: none;
-
-  //   &:hover {
-  //     cursor: default !important;
-  //   }
-  // }
-
   .member,
   .add-member-btn {
     @include flex(flex-start, center);
@@ -67,6 +60,11 @@
 
     &:hover {
       background-color: $background;
+    }
+
+    &:hover span {
+      color: $accent;
+      font-weight: 700;
     }
 
     > span {
