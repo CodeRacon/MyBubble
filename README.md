@@ -22,7 +22,7 @@ MyBubble is a sophisticated real-time communication platform built with Angular 
 
 ## Key Highlights ⭐
 
-- Responsive design for seamless cross-device usage
+- Responsive design
 - Optimized performance through efficient code structure
 - Real-time message synchronization
 - Intuitive user interface with modern design patterns
@@ -37,7 +37,6 @@ MyBubble is a sophisticated real-time communication platform built with Angular 
 - Performance optimization
 - User-centric design
 - Real-time capabilities
-- Cross-browser compatibility
 
 ---
 Developed with ❤️ using Angular 17 and Firebase
