@@ -10,7 +10,7 @@
 
   <div class="static-bubble-logo">
     <img src="./assets/img/start-logo.png" alt="DA-Bubble Logo" />
-    <span>DABubble</span>
+    <span>MyBubble</span>
   </div>
 
   <form
@@ -24,13 +24,13 @@
     <span class="headline">Konto erstellen</span>
     <span class="info"
       >Mit deinem Namen und deiner Mail-Adresse hast du dein neues
-      DABubble-Konto.</span
+      MyBubble-Konto.</span
     >
     <div class="input-box name">
       <input
         formControlName="name"
         type="text"
-        placeholder="Name und Nachname"
+        placeholder="Vor- und Nachname"
         maxlength="20"
       />
       @if(signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty ||
@@ -42,7 +42,7 @@
       <input
         formControlName="email"
         type="text"
-        placeholder="beispielname@email.com"
+        placeholder="beispiel@email.com"
       />
       @if(errorEmailExists != '') {
       <span class="errorspan">{{ errorEmailExists }}</span>
@@ -55,7 +55,7 @@
       <input
         formControlName="password"
         type="password"
-        placeholder="password"
+        placeholder="Passwort"
         minlength="6"
         max="20"
       />

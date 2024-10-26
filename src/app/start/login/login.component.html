@@ -9,7 +9,7 @@
         </div>
 
         <div class="heading">
-          <span>DABubble</span>
+          <span>MyBubble</span>
         </div>
       </div>
     </div>
@@ -17,13 +17,13 @@
 
   <div class="static-bubble-logo">
     <img src="./assets/img/start-logo.png" alt="DA-Bubble Logo" />
-    <span>DABubble</span>
+    <span>MyBubble</span>
   </div>
 
   <!-- Signup Button -->
   @if(loginFormShow) {
   <div class="signup-btn">
-    <span>Neu bei DABubble?</span>
+    <span>Neu bei MyBubble?</span>
     <button [routerLink]="['/signup']">Konto erstellen</button>
   </div>
   }
@@ -75,10 +75,7 @@
     </div>
     <div class="action-btns-pwreset">
       @if(showSpinner) {
-      <img
-        src="./assets/icons/svg-spinner-accent.svg"
-        alt="loading spinner"
-      />
+      <img src="./assets/icons/svg-spinner-accent.svg" alt="loading spinner" />
       }
       <button
         [disabled]="passwordResetForm.invalid"
