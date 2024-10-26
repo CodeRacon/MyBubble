@@ -4,14 +4,14 @@ import { Message } from '../../shared/models/message.class';
 import { CollectionType, User } from '../../shared/models/user.class';
 
 /**
- * A constant string containing the welcome message content for DABubble.
+ * A constant string containing the welcome message content for MyBubble.
  *
  * The message is formatted in HTML and includes:
  * - A welcome heading.
- * - A brief description of DABubble as a modern chat app for efficient communication in channels and direct messages.
+ * - A brief description of MyBubble as a modern chat app for efficient communication in channels and direct messages.
  * - Information about general and specific channels for questions.
  * - Contact information for specific users for further assistance.
- * - Encouragement to enjoy using DABubble and a reminder that support is available.
+ * - Encouragement to enjoy using MyBubble and a reminder that support is available.
  *
  * The message is designed to be displayed to new users to help them get started with the app.
  */
@@ -42,6 +42,9 @@ const welcomemessagecontent = /*html*/ `
   >
   sind dann entsprechend speziellen Themen vorbehalten.
 </p>
+<p>
+  Um <em> bestimmte User</em> anzuschreiben, nutze die <b>Suchfunktion</b>.
+</p>
 <p><br /></p>
 <p>
   Bei Fragen wende Dich gerne direkt an mich, den <span class="highlight-user" id="EowMmbqEJCpwi1fNFH3A" contenteditable="false"
@@ -51,8 +54,7 @@ const welcomemessagecontent = /*html*/ `
 </p>
 <p><br /></p>
 <p>
-  Viel Spaß mit <strong>DABubble!</strong> Bei Fragen bin ich immer für dich
-  da. Um <em>User</em> anzuschreiben, nutze die Suchfunktion.
+  Viel Spaß mit <strong>MyBubble!</strong> 
 </p>
 `;
 
@@ -63,7 +65,7 @@ const userHint1 = /*html*/ `
   Bitte verifiziere Deine E-Mail Adresse über den Link, den wir Dir an Deine
   E-Mail-Adresse geschickt haben.
 </p>
-<p>Erst danach, kannst Du <strong>DABubble</strong> im vollem Umfang nutzen:</p>
+<p>Erst danach, kannst Du <strong>MyBubble</strong> im vollem Umfang nutzen:</p>
 <ol>
   <li data-list="ordered">
     <span class="ql-ui" contenteditable="false"></span>Channels anlegen
@@ -78,7 +80,7 @@ const userHint1 = /*html*/ `
 </ol>
 <p>Vielen Dank, für Dein Verständnis. 👍</p>
 <p><br /></p>
-<p>Euer DABubble 303 Team. 😉</p>
+<p>Euer MyBubble 303 Team. 😉</p>
 `;
 
 const guestHint1 = /*html*/ `  
@@ -105,7 +107,7 @@ const guestHint1 = /*html*/ `
 </ol>
 <p><br /></p>
 <p>
-  Um <em>eigene</em> Profilfotos hochzuladen musst Du Dich mit Name, E-Mail und
+  Um <em>eigene</em> Profilfotos hochzuladen, musst Du ein eigenes Konto anlagen und Dich mit Name, E-Mail und
   Passwort registrieren.
 </p>
 <p><br /></p>
@@ -113,10 +115,10 @@ const guestHint1 = /*html*/ `
 `;
 
 const guestHint2 = /*html*/ `
-<h2>Eine letzte Bitte noch:</h2>
+<h3>Eine letzte Bitte noch:</h3>
 <p><br /></p>
 <p>
-  Bitte nutze die <strong>Logout</strong> Möglichkeit rechts oben im
+  Nutze die <strong>Logout</strong> Möglichkeit rechts oben im
   <em>Profil-Menü</em>. ☝️
 </p>
 <p>
