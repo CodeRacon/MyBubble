@@ -422,15 +422,34 @@ export class LoginComponent implements OnDestroy, OnInit {
   }
 
   /**
-   * Handles login errors by setting appropriate error messages based on the error code.
+   * Validates the provided email and password credentials against the 'users' collection in Firestore.
    *
-   * @param error - The error message string received during the login process.
+   * If the email does not exist in the 'users' collection, the `errorEmail` property is set to 'Diese Email-Adresse existiert nicht.'.
+   * If the email exists but the password is incorrect, the `errorPassword` property is set to 'Falsches Passwort eingegeben.'.
    *
-   * Error codes and their corresponding messages:
-   * - 'auth/user-not-found': Sets `errorEmail` to 'Diese Mailaddresse ist nicht registriert.'
-   * - 'auth/wrong-password': Sets `errorPassword` to 'Falsches Passwort.'
-   * - 'auth/popup-closed-by-user': Sets `errorGoogleSignin` to 'Anmeldung durch Benutzer abgebrochen.'
-   * - 'auth/google-signin-error-name-email-missing': Sets `errorGoogleSignin` to 'Anmeldung fehlgeschlagen. Name & E-Mail unbekannt.'
+   * @param email - The email address to validate.
+   * @param password - The password to validate.
+   */
+  private async validateCredentials(email: string, password: string) {
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      this.errorEmail = 'Diese Email-Adresse existiert nicht.';
+      this.errorPassword = '';
+    } else {
+      this.errorEmail = '';
+      this.errorPassword = 'Falsches Passwort eingegeben.';
+    }
+  }
+
+  /**
+   * Handles various error cases that can occur during the login process.
+   *
+   * This method is responsible for setting the appropriate error messages based on the error string received.
+   *
+   * @param error - The error string received during the login process.
    */
   handleLoginErrors(error: string) {
     if (error.includes('auth/user-not-found')) {
@@ -439,6 +458,10 @@ export class LoginComponent implements OnDestroy, OnInit {
       this.errorPassword = 'Falsches Passwort.';
     } else if (error.includes('auth/popup-closed-by-user')) {
       this.errorGoogleSignin = 'Anmeldung durch Benutzer abgebrochen.';
+    } else if (error.includes('auth/invalid-credential')) {
+      const email = this.loginForm.get('email')?.value || '';
+      const password = this.loginForm.get('password')?.value || '';
+      this.validateCredentials(email, password);
     } else if (error.includes('auth/google-signin-error-name-email-missing')) {
       this.errorGoogleSignin =
         'Anmeldung fehlgeschlagen. Name & E-Mail unbekannt.';
@@ -493,8 +516,8 @@ export class LoginComponent implements OnDestroy, OnInit {
    *
    * This function performs the following steps:
    * 1. Creates a chat with the new user.
-   * 2. Creates a chat with the dabubble bot.
-   * 3. Sends each message in the `messagesArray` to the dabubble bot chat.
+   * 2. Creates a chat with the MyBubble bot.
+   * 3. Sends each message in the `messagesArray` to the MyBubble bot chat.
    */
   private async implementSomeNewUserStuff(
     newUserID: string,
