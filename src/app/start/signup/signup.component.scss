@@ -111,10 +111,13 @@ section {
 
     .return {
       position: absolute;
-      top: 1rem;
-      left: 1rem;
+      top: 2rem;
+      left: 2rem;
       @include iconBox;
-      @include flex(center, center);
+
+      &:hover img {
+        content: url("../../../assets/icons/start/go-back-hover.svg");
+      }
     }
 
     .input-box {
@@ -144,22 +147,19 @@ section {
     }
 
     .headline {
-      @include nunito(2.8, 700, $accent);
+      @include nunito(2.75, 700, $accent);
       text-align: center;
       line-height: 100%;
 
       @media (width <= 480px) {
-        margin-top: 2rem;
-      }
-
-      @media (width < 426px) {
-        margin-top: 4rem;
+        font-size: 2.25rem;
       }
     }
 
     .info {
-      @include nunito(1.2, 400);
+      @include nunito(1.25, 400);
       text-align: center;
+      text-wrap: balance;
     }
 
     .check-pp {
