@@ -13,11 +13,12 @@ section {
 
   .picker-list {
     position: absolute;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
     bottom: 105%;
     max-height: 13rem;
+    width: 14rem;
     border-radius: 1.5rem 1.5rem 0 1.5rem;
     border: 1px solid #a8bebc;
     background-color: white;
@@ -26,8 +27,10 @@ section {
     transition: $transition-standard;
 
     .picker-close {
-      @include flex(center, center);
       @include iconBox;
+      width: 2rem;
+      height: 2rem;
+      margin: 5px 2px 0 0;
 
       &:hover img {
         content: url("../../../assets/icons/chat/general/close-hover.svg");
@@ -38,16 +41,16 @@ section {
       position: sticky;
       z-index: 1010;
       top: 0;
-      margin-left: auto;
-      margin-right: 0.2rem;
-      width: fit-content;
       @include flex(flex-end, center);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: 0.25rem;
       background-color: white;
-      border-radius: 1000px;
+      border-radius: $circled-border-radius;
     }
 
     .picker-info {
-      @include nunito(0.875rem, 600, $text);
+      @include nunito(0.875, 400, $text);
       position: sticky;
       z-index: 1010;
       top: 0;
@@ -91,15 +94,23 @@ section {
         gap: 0.5rem;
         width: 100%;
         padding: 0.3rem;
-        border-radius: 1000rem;
+        border-radius: $circled-border-radius;
         cursor: pointer;
 
         .picker-item-name {
-          @include nunito(0.875rem, 600, $text);
+          @include nunito(0.875, 400, $text);
         }
 
         &:hover {
           background-color: $background;
+        }
+
+        &:hover .picker-item-name {
+          @include nunito(0.875, 700, $accent);
+        }
+
+        &:hover img.hashtag-icon {
+          content: url("../../../assets/icons/wsm/hashtag-hover.svg");
         }
       }
     }
