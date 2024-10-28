@@ -2,7 +2,6 @@
 @import "../../../../mixins.scss";
 
 $username-fs: clamp(1.5rem, 2.062vw + 0.351rem, 2rem);
-// ##############################
 
 .profile {
   @include flex(flex-end, center);
@@ -294,7 +293,7 @@ $username-fs: clamp(1.5rem, 2.062vw + 0.351rem, 2rem);
       }
 
       .input-box {
-        @include inputBox(100%, #adb0d9, $secondary, $secondary, false);
+        @include inputBox(100%, #a8bebc, $secondary, $secondary, false);
 
         &.restricted {
           border-color: $disabled !important;
