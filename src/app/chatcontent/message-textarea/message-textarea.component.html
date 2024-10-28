@@ -12,14 +12,17 @@
   @if(!ifMessageUploading && attachments.length > 0){
   <div class="attachments">
     @for(attachment of attachments; track attachment; let index = $index){
-    <button [attr.popovertarget]="'attachment-preview' + index" class="attachment">
+    <button
+      [attr.popovertarget]="'attachment-preview' + index"
+      class="attachment"
+    >
       <img src="{{ attachment.src }}" alt="+" />
       <span>{{ attachment.name }}</span>
       <img
         (click)="removeAttachment(attachment)"
         class="remove-attachment"
-        src="./assets/icons/chat/general/close.svg"
-        alt="close"
+        src="./assets/icons/modals/close-search-item.svg"
+        alt="remove attachment"
       />
     </button>
     <div class="attachment-preview" popover [id]="'attachment-preview' + index">
@@ -27,7 +30,7 @@
       <img src="{{ attachment.src }}" alt="+" />
       }
     </div>
-  }
+    }
   </div>
   }
   <div class="input-message-toolbar z-index-2">
