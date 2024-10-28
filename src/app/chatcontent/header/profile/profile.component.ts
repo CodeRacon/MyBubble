@@ -164,7 +164,7 @@ export class ProfileComponent implements OnInit {
    */
   passwordCheck(): boolean {
     if (!this.emailChanged()) return true;
-    return this.reauthpassword.length >= 8;
+    return this.reauthpassword.length >= 6;
   }
 
   /**
