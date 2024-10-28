@@ -18,6 +18,8 @@
   flex-grow: 0;
   padding: 1.125rem;
   border-radius: 1.875rem;
+  border: 1px solid #e4e7e2;
+
   background-color: #fff;
   transition: $transition-standard;
 
@@ -251,7 +253,7 @@
 
   .date-picker::-webkit-datetime-edit-fields-wrapper {
     border-radius: 8px;
-    border: 1px solid #adb0d9;
+    border: 1px solid #a8bebc;
     font-family: "Nunito", sans-serif;
   }
 
