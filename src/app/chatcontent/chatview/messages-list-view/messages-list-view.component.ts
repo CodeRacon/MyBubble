@@ -114,6 +114,7 @@ export class MessagesListViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  // NOTE 
 
   /**
    * Scrolls the view to a specific message element identified by its ID.

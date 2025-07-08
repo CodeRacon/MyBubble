@@ -28,6 +28,10 @@ import { EmojipickerComponent } from './emojipicker/emojipicker.component';
 export class ChatcontentComponent implements OnInit, OnDestroy {
   private breakpointSubscription: Subscription | undefined;
 
+  // NOTE 
+  // these boolean flags control the visibility of the three main areas
+  // they are set by the layout logic and used in the template via *ngIf,
+  // separating layout logic and template rendering
   currentLayout:
     | 'three-columns'
     | 'two-broad-columns'
@@ -42,6 +46,12 @@ export class ChatcontentComponent implements OnInit, OnDestroy {
   navigationService = inject(NavigationService);
 
   constructor(private breakpointObserver: BreakpointObserver) {}
+
+  // NOTE 
+  // BreakpointObserver from Angular CDK monitors the window size
+  // 4 defined breakpoints determine the layout:
+  // from 3-column desktop to 1-column mobile
+  // each time a change is made, setLayout() is called automatically
 
   /**
    * Initializes the layout of the chat content component based on the current screen size.
@@ -70,6 +80,11 @@ export class ChatcontentComponent implements OnInit, OnDestroy {
         }
         this.setLayout();
       });
+
+    // NOTE 
+    // layout reacts not only to screen size, but also to user actions:
+    // if a user opens a thread on the cell phone, workspace-menu and chat are automatically hidden
+    // these changes are coordinated by the BehaviorSubject from the NavigationService
 
     this.navigationService.change$.subscribe((change) => {
       if (change === 'threadViewObjectSet') {
@@ -105,6 +120,12 @@ export class ChatcontentComponent implements OnInit, OnDestroy {
       this.breakpointSubscription.unsubscribe();
     }
   }
+
+  // NOTE
+  // each breakpoint has its own layout logic:
+  // - with a 2-column layout, the thread displaces the workspace menu
+  // - with a 1-column layout, only one view is displayed at a time
+  // kind of priority Management for different screen sizes
 
   /**
    * Sets the layout of the chat content based on the current layout mode.

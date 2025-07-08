@@ -29,6 +29,12 @@ type AvatarContext =
   | 'chat-message'
   | 'thread-message';
 
+
+// NOTE
+// this is an attribute directive 
+// - it extends HTML elements with [appAvatar]
+// the context determines size and behavior - from 1.5rem (Search) to 10rem (Profile
+// Renderer2 ensures secure DOM manipulation
 @Directive({
   selector: '[appAvatar]',
   standalone: true,
@@ -89,6 +95,12 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
     this.applyAvatarStyles();
   }
 
+  // NOTE
+  // this is where the reactivity happens:
+  // the directive subscribes to user changes
+  // if the online status or the profile picture changes,
+  // updateAvatar() is called automatically - without the component having to do anything
+
   /**
    * Subscribes to the user observable and updates the avatar when the user changes.
    * This method is called when the `user` input property changes, except for the first change.
@@ -105,6 +117,11 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
       }
     );
   }
+
+  //NOTE 
+  // this is where the DOM is manipulated:
+  // it dynamically creates IMG elements and optionally a (online-)status indicator
+  // everything is done via Renderer2 - according to Angular, this is safe and also works with server-side rendering
 
   /**
    * Applies the avatar styles to the directive's element, including setting the avatar image and optional online status indicator.
@@ -162,6 +179,11 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
       online ? this.online : this.offline
     );
   }
+
+  // NOTE
+  // the small green/grey dot shows the users online status
+  // it is positioned absolutely (bottom-right) and reacts live to user status changes
+  // pure DOM manipulation without CSS classes
 
   /**
    * Adds a status indicator element to the avatar.
@@ -237,6 +259,10 @@ export class AvatarDirective implements OnInit, OnChanges, OnDestroy {
     }
     return null;
   }
+
+  // NOTE
+  // 11 different contexts, each with customized styles from 1.5rem in the search
+  // to 10rem in the profile component
 
   /**
    * Provides styles for the avatar component based on the current context.

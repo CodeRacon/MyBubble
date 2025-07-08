@@ -25,11 +25,17 @@ export class UsersService implements OnDestroy {
   private updateCurrentUserDataFunction: any = undefined;
   public isUserMemberOfCurrentChannel = false;
 
+  // NOTE - 
+  // defining BehaviorSubjects -
+  // a kind of reactive DataStore, which remembers its current value
+  // and informs all subscribers about any changes instantly 
+
+
   private changeUserListSubject = new BehaviorSubject<User[]>([]);
   public changeUserList$ = this.changeUserListSubject.asObservable();
-
   private changeCurrentUserSubject = new BehaviorSubject<CurrentUserChange>('init');
   public changeCurrentUser$ = this.changeCurrentUserSubject.asObservable();
+  // END
 
   private selectedUserObjectSubject = new BehaviorSubject<User | undefined>(undefined);
   public selectedUserObject$ = this.selectedUserObjectSubject.asObservable();
@@ -113,19 +119,18 @@ export class UsersService implements OnDestroy {
   }
 
 
+  // NOTE 
   /**
-   * Initializes the user subscription to listen for changes in the Firestore 'users' collection.
+   * Initializes the user subscription to listen for any changes in the Firestore 'users' collection.
    * 
    * This method sets up a snapshot listener on the 'users' collection and handles the following changes:
-   * - **Added**: Adds a new user to the local `users` array.
-   * - **Modified**: Updates an existing user in the local `users` array.
-   * - **Removed**: Removes a user from the local `users` array based on their email.
+   * - Added:     Adds a new user to the local `users` array.
+   * - Modified:  Updates an existing user in the local `users` array.
+   * - Removed:   Removes a user from the local `users` array based on their email.
    * 
-   * Additionally, if the change affects the current user, it updates the current user's online status
-   * and notifies subscribers of the current user subject.
+   * Additionally, if the change affects the current user, it updates the current user's online status and notifies subscribers of the current user subject.
    * 
-   * After processing all changes, the method sorts the `users` array by name and notifies subscribers
-   * of the user list subject.
+   * After processing all changes, the method sorts the `users` array by name and notifies subscribers of the user list subject.
    * 
    * @private
    * @returns {void}

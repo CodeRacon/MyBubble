@@ -259,6 +259,11 @@ export class SearchbarComponent implements OnInit {
     }
   }
 
+  // NOTE
+  // before scrolling, system analyzes the collectionPath of the message:
+  // is it a channel or dm-chat
+  // then the corresponding context is loaded, which can trigger layout changes
+
   /**
    * Handles the selection of a message search suggestion, finding the target chat or channel and setting the chat view object to it, then scrolling to the message.
    *
@@ -296,6 +301,11 @@ export class SearchbarComponent implements OnInit {
     this.recentSearches = this.searchService.getRecentSearches();
     this.isDropdownVisible = false;
   }
+
+  // NOTE
+  // the system waits for navigationComplete$
+  // then checks every 500ms whether the correct context has actually been loaded
+  // only then is the scrolling triggered - otherwise it would run into nothing
 
   /**
    * Scrolls to the specified message in the chat view.

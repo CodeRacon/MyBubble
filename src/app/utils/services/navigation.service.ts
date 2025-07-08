@@ -51,7 +51,10 @@ export class NavigationService {
     this.showProfileDetails.next(toggle);
   }
 
-
+  // NOTE
+  // this BehaviorSubject coordinates the navigation between the chatview, threadview and WorkspaceView.
+  // Every change is forwarded to all of the layout components
+  // Change of data ==> BehaviorSubject ==> auto UI-update
   /**
    * Observable that emits whenever a change occurs.
    */
@@ -116,6 +119,10 @@ export class NavigationService {
     }
   }
 
+  // NOTE
+  // here the BehaviorSubject is triggered:
+  // if user selects a channel, the layout system is automatically informed
+  // the components respond by adjusting the visibility of the columns
 
   /**
    * Sets the chat view object as a channel and updates the chat view path.

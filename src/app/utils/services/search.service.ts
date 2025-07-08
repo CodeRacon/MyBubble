@@ -37,11 +37,15 @@ export class SearchService {
     return this._isContextSearchEnabled;
   }
 
+  // NOTE
+  // the BehaviorSubject saves the current search status - query, context and path
+  // each component can subscribe to it and immediately receives the current status
+
   /**
    * A BehaviorSubject that holds the current search state, including the search query and any context restrictions.
    *
    * The search state is used to manage the state of the search functionality in the application.
-   * The `query` property holds the current search query, and the `context` property holds any context restrictions
+   * The `query` property holds the current search query, and the `context` property holds any contextual restrictions
    * that have been applied to the search.
    */
   private searchStateSubject = new BehaviorSubject<{
@@ -305,6 +309,11 @@ export class SearchService {
   }
 
 
+  //NOTE 
+  // this optimizes search-performance:
+  // debounceTime(300) waits 300ms after the last keystroke
+  // the message search only starts after 3 characters typed
+
   getSearchSuggestions(): Observable<GroupedSearchResults> {
     return this.searchState$.pipe(
       debounceTime(300), distinctUntilChanged(), switchMap((state) => {
@@ -377,6 +386,9 @@ export class SearchService {
     );
   }
 
+  // NOTE 
+  // messages can contain HTML (due to formatting via Rich Text Editor)
+  // before the search, all tags are removed with a regex so that only the plain text is searched
 
   /**
    * Searches for messages based on the provided query string.
@@ -404,6 +416,10 @@ export class SearchService {
   // ############################################################################################################
   // Utility Methods
   // ############################################################################################################
+
+  // NOTE
+  // shortening in context: search term is found, a snippet is cut from the message (if exeeding max 60 characters) and the search term is positioned in the middle of that snippet
+  // in addition, the term is visually highlighted with <strong>
 
   /**
    * Truncates the content of a message to a maximum length, highlighting the search query within the content.
